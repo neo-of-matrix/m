@@ -1,24 +1,41 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import "./style.css";
+import microApp from "@micro-zoe/micro-app";
+import qs from "qs";
+microApp.start();
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
+function link(element: HTMLButtonElement) {
+  const linkTo = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const query = qs.parse(window.location.search.replace("?", ""));
+    if (Object.keys(query).includes(target.innerHTML)) {
+      return;
+    }
+    document.querySelector<HTMLDivElement>(
+      "#micro-apps"
+    )!.innerHTML = `<micro-app name="${
+      target.innerHTML
+    }" url="http://localhost:${
+      target.innerHTML === "react-app" ? 3000 : 9000
+    }/" iframe></micro-app>`;
+
+    window.history.pushState(
+      {},
+      "",
+      `?${target.innerHTML}=${encodeURIComponent("/")}`
+    );
+  };
+
+  element.addEventListener("click", (e) => linkTo(e));
+}
+document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
+    <div>
+      <div id="router">
+        <button>react-app</button>
+        <button>vue-app</button>
+      </div>
+      <div id="micro-apps">
+        <micro-app name="react-app" url="http://localhost:3000/" iframe></micro-app>
+      </div>
     </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
-
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+`;
+link(document.querySelector<HTMLButtonElement>("#router")!);
