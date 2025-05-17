@@ -1,0 +1,32 @@
+.up-component {
+  border: 1px solid black;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.up-component-section {
+  padding: 10px;
+}
+
+.control-item {
+  margin-bottom: 10px;
+}
+
+.control-label {
+  margin-right: 10px;
+}
+
+.component {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.child-component {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.child-control {
+  margin-right: 10px;
+}
