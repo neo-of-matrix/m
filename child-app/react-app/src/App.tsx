@@ -6,7 +6,7 @@ import Action from "./action/index.tsx";
 import FormStatus from "./form/index.tsx";
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/react-app">
       <nav
         style={{
           display: "flex",
